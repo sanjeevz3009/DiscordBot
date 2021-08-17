@@ -3,6 +3,8 @@ import time
 import asyncio
 # 877251072220069898
 
+# Branch merge fix!
+
 messages = joined = 0
 
 def readToken():
