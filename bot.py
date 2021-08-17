@@ -12,9 +12,11 @@ def readToken():
     
 token = readToken()
 
-client = discord.Client()
+# client = discord.Client()
+intents = discord.Intents().all()
+client = discord.Client(intents=intents)
 
-async updateStats():
+async def updateStats():
     await client.wait_until_ready()
     global messages, joined
     
@@ -26,7 +28,7 @@ async updateStats():
             joined = 0
             
             await asyncio.sleep(5)
-        except Exception as e::
+        except Exception as e:
             print(e)
             await asyncio.sleep(5)
 
@@ -54,7 +56,21 @@ async def on_member_join(member):
         if str(channel) == "general":
             await client.send_message(f"Welcome To The Server! {member.mention}")
             
+@client.event
+async def on_member_update(before, after):
+    print("Works")
+    n = after.nick
+    if n:
+        if n.lower().count("sanjeev") > 0:
+            last = before.nick
+            if last:
+                await after.edit(nick=last)
+            else:
+                await after.edit(nick="NO STOP THAT")
+                
             
-client.loop.create_task(updateStats)
+            
+            
+client.loop.create_task(updateStats())
 
 client.run(token)
