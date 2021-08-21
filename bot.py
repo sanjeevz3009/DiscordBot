@@ -41,7 +41,19 @@ async def on_message(message):
     serverID = client.get_guild(877251072220069898)
     channels = ["commands"]
     validUsers = ["Sanjeev#7455"]
+    badWords = ["bad", "stop", "45"]
     
+    for word in badWords:
+        if message.content.count(word) > 0:
+            print("A bad word was said", word)
+            await message.channel.purge(limit=1)
+            
+    if message.content == "!help":
+        embed = discord.Embed(title="Help", description="Some useful commands")
+        embed.add_field(name="!hello", value="Greets the user")
+        embed.add_field(name="!users", value="Display number of users")
+        await message.channel.send(content=None, embed=embed)
+                
     if str(message.channel) in channels and str(message.author) in validUsers:
         if message.content.find("!hello") != -1:
             await message.channel.send("Hi")
